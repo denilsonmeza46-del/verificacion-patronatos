@@ -89,4 +89,37 @@
                 p.mods.forEach((passed, idx) => {
                     if (passed) {
                         modulesHtml += `<div class="flex items-center text-sm text-emerald-700 mb-2 font-medium">
-                            <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 1 0 010 1.414l-8 8a1 1 1 0 01-1.414 0l-4-4a1 1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 1 0 011.41
+                            <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 1 0 010 1.414l-8 8a1 1 1 0 01-1.414 0l-4-4a1 1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                            ${modulesNames[idx]} (4 hrs)
+                        </div>`;
+                        totalHours += 4;
+                    } else {
+                        modulesHtml += `<div class="flex items-center text-sm text-slate-400 mb-2">
+                            <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            ${modulesNames[idx]}
+                        </div>`;
+                    }
+                });
+
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-xl shadow-sm border border-slate-200 transition-all hover:shadow-md';
+                card.innerHTML = `
+                    <h2 class="text-xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-3">${p.name}</h2>
+                    <div class="mb-4">
+                        <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Módulos Evaluados:</p>
+                        ${modulesHtml}
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center">
+                        <span class="text-sm font-medium text-slate-500">Validez Oficial</span>
+                        <span class="inline-block bg-slate-800 text-white text-xs px-3 py-1.5 rounded-full font-bold">Total acreditado: ${totalHours} horas</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        searchInput.addEventListener('input', (e) => renderList(e.target.value));
+        renderList(); // Cargar la lista completa al inicio
+    </script>
+</body>
+</html>
