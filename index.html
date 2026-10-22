@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Diplomas - Desarrollo Social</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <div class="max-w-3xl mx-auto px-4 py-8">
+        <!-- Encabezado Institucional -->
+        <div class="text-center mb-8">
+            <img src="logo.png" alt="Logo Departamento de Desarrollo Social" class="h-40 mx-auto mb-4 drop-shadow-md">
+            <h1 class="text-2xl font-bold text-slate-800">Verificación de Formación de Patronatos</h1>
+            <p class="text-slate-600 mt-1 font-medium">Departamento de Desarrollo Social (2026-2030)</p>
+            <p class="text-slate-500 text-sm mt-1">Municipalidad de San Pedro de Tutule</p>
+        </div>
+
+        <!-- Buscador -->
+        <div class="mb-6">
+            <input type="text" id="searchInput" placeholder="Buscar participante por nombre o apellido..." class="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-600 text-lg">
+        </div>
+
+        <!-- Contenedor de Resultados -->
+        <div id="resultsContainer" class="space-y-4">
+            <!-- Las tarjetas se generan aquí -->
+        </div>
+    </div>
+
+    <script>
+        const modulesNames = [
+            "Módulo I (Teoría Organizacional)",
+            "Módulo II (Liderazgo y Participación Ciudadana)",
+            "Módulo III (Genero y Desarrollo)",
+            "Módulo IV (Desarrollo Local y Proyectos)",
+            "Módulo V (Estrategias de Incidencia Política)"
+        ];
+
+        // Base de datos de los participantes
+        const data = [
+            {"name":"Abraham Chavarria","mods":[1,1,1,1,1]},
+            {"name":"Ada David Gonzales","mods":[0,0,1,0,0]},
+            {"name":"Angel Daniel Rodríguez","mods":[1,1,1,0,0]},
+            {"name":"Antonia Vásquez Martínez","mods":[1,0,0,0,1]},
+            {"name":"Blanca Emma Peñalva","mods":[0,1,1,1,1]},
+            {"name":"Carlos A. Cabrera U","mods":[1,0,1,1,1]},
+            {"name":"Cesar Nahun David","mods":[1,1,1,1,1]},
+            {"name":"Delmer Fredy Benítez","mods":[1,0,0,0,0]},
+            {"name":"Dilma Villatoro","mods":[1,1,1,1,1]},
+            {"name":"Edwin Francisco Meléndez","mods":[1,1,0,1,0]},
+            {"name":"Eleticia Molina","mods":[1,1,1,0,0]},
+            {"name":"Eucebio Ivan","mods":[1,1,1,0,0]},
+            {"name":"Ever Ordulio Rivera","mods":[0,0,0,1,0]},
+            {"name":"Erixon Chavez","mods":[1,1,0,0,0]},
+            {"name":"Gleida Melisa Chavez","mods":[1,0,0,0,0]},
+            {"name":"Gloribeth Izamar Molina","mods":[1,1,1,1,1]},
+            {"name":"Jessie Maricela Velásquez","mods":[1,1,1,1,1]},
+            {"name":"Jose Augusto C.","mods":[1,0,0,0,0]},
+            {"name":"Juana Francisca Claros","mods":[1,0,1,1,1]},
+            {"name":"Kelvin Bardales","mods":[1,1,0,1,0]},
+            {"name":"Lizzeth Dinayda Mejía","mods":[1,1,0,1,1]},
+            {"name":"Maria Santos Vasquez","mods":[1,1,0,1,1]},
+            {"name":"Martha Castellano","mods":[0,1,0,0,0]},
+            {"name":"Oscar Vasquez","mods":[1,0,0,0,0]},
+            {"name":"Oswaldo Pineda","mods":[1,0,0,0,0]},
+            {"name":"Pascual Aguilar Suazo","mods":[1,1,1,1,1]},
+            {"name":"Royars Denilson Meza","mods":[1,1,1,1,1]},
+            {"name":"Valeska Galeas","mods":[1,1,0,0,0]},
+            {"name":"Wilmer Castillo","mods":[1,0,0,0,0]},
+            {"name":"Wilmer Anibal Martínez","mods":[0,1,0,0,0]}
+        ];
+
+        const container = document.getElementById('resultsContainer');
+        const searchInput = document.getElementById('searchInput');
+
+        function renderList(filterText = '') {
+            container.innerHTML = '';
+            const filtered = data.filter(p => p.name.toLowerCase().includes(filterText.toLowerCase()));
+            
+            if (filtered.length === 0) {
+                container.innerHTML = '<p class="text-center text-slate-500 py-4 font-medium">No se encontraron participantes con ese nombre.</p>';
+                return;
+            }
+
+            filtered.forEach(p => {
+                let modulesHtml = '';
+                let totalHours = 0;
+                
+                p.mods.forEach((passed, idx) => {
+                    if (passed) {
+                        modulesHtml += `<div class="flex items-center text-sm text-emerald-700 mb-2 font-medium">
+                            <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 1 0 010 1.414l-8 8a1 1 1 0 01-1.414 0l-4-4a1 1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 1 0 011.41
